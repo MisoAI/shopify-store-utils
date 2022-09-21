@@ -1,4 +1,4 @@
-import { version, api, ajax, getCustomerId, getAnonymousUserToken, parseUrl, CartObserver } from '../src';
+import { version, api, ajax, history, getCustomerId, getAnonymousUserToken, parseUrl, CartObserver } from '../src';
 
 const TAG = '%cSSU';
 const STYLE = 'color: #fff; background-color: #650CF7; padding: 2px 2px 1px 4px;';
@@ -40,6 +40,10 @@ switch (page.type) {
 const cart = new CartObserver();
 cart.subscribe(event => {
   log(`cart update`, [event]);
+});
+
+history.observe(event => {
+  log(`history event: ${event.type}`, [event]);
 });
 
 window.ssu = {

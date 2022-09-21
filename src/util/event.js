@@ -1,13 +1,39 @@
 import { removeItem } from './misc';
 
-export default class EventSource {
+class JointEventSource {
 
-  constructor() {
-    this._callbacks = [];
-    this._install();
+  constructor(sources) {
+    this._sources = sources;
   }
 
-  _install() {}
+  subscribe(callback) {
+    const unsubscribes = [];
+    for (const source of this._sources) {
+      unsubscribes.push(source.subscribe(callback));
+    }
+    return () => {
+      for (const unsubscribe of unsubscribes) {
+        unsubscribe();
+      }
+    };
+  }
+
+}
+
+export default class EventSource {
+
+  static join(...sources) {
+    return new JointEventSource(sources);
+  }
+
+  constructor({ install }) {
+    this._callbacks = [];
+    install = install || this._install;
+    if (!install || typeof install !== 'function') {
+      throw new Error(`Subclass should implement _install() method or pass install function to constructor.`);
+    }
+    install.call(this);
+  }
 
   _emit(event) {
     for (const callback of this._callbacks) {

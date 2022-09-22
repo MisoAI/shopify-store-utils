@@ -26,7 +26,7 @@ export default class EventSource {
     return new JointEventSource(sources);
   }
 
-  constructor({ install }) {
+  constructor({ install } = {}) {
     this._callbacks = [];
     install = install || this._install;
     if (!install || typeof install !== 'function') {

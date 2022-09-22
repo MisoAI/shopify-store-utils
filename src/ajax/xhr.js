@@ -48,13 +48,13 @@ export class XhrEventSource extends EventSource {
 
   constructor() {
     super();
-    this._context = new WeakMap();
+    this._install();
   }
 
   _install() {
     const { open: _open, setRequestHeader: _setRequestHeader, send: _send } = window.XMLHttpRequest.prototype;
     Object.assign(this, { _open, _setRequestHeader, _send });
-    const context = this._context;
+    const context = this._context = new WeakMap();
     const self = this;
 
     function open(method, url, async) {

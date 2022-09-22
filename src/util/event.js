@@ -28,11 +28,7 @@ export default class EventSource {
 
   constructor({ install } = {}) {
     this._callbacks = [];
-    install = install || this._install;
-    if (!install || typeof install !== 'function') {
-      throw new Error(`Subclass should implement _install() method or pass install function to constructor.`);
-    }
-    install.call(this);
+    install && install.call(this);
   }
 
   _emit(event) {

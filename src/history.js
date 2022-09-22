@@ -14,6 +14,7 @@ class HistoryEventSource extends EventSource {
 
   constructor() {
     super();
+    this._install();
   }
 
   _install() {

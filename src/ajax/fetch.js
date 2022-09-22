@@ -7,6 +7,7 @@ class FetchEventSource extends EventSource {
 
   constructor() {
     super();
+    this._install();
   }
 
   _install() {

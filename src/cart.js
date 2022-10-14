@@ -27,7 +27,11 @@ export default class CartObserver extends EventSource {
       return;
     }
 
+    // TODO: we should provide parseUrl util for ajax URLs
     const path = url.pathname;
+    if (path.indexOf('/cart') < 0) {
+      return;
+    }
     const isJson = isJsonResponse(path);
     const action = getActionType(path);
 
